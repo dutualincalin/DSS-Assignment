@@ -1,0 +1,12 @@
+Boards:
+* Name, Lists
++ Create and give name, Rename, Delete, Open
+
+Lists:
+* Name, Image?, Cards
++ Create and give name, Rename, Delete, Add a card
+
+Cards:
+* Title, Description
++ Edit Card components, Delete Card
+

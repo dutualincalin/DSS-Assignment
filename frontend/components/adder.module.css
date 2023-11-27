@@ -1,0 +1,11 @@
+.adderIconButtonStyle {
+    background-color: #EFEFEF;
+    position:fixed;
+    bottom:16px;
+    right:16px
+}
+
+.adderIconStyle {
+    height: 80px;
+    width: 100%
+}
