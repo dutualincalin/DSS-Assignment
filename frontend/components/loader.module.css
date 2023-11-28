@@ -1,0 +1,9 @@
+.loadingPanel {
+    height: calc(100vh - 160px);
+    width: 100vw;
+}
+
+.loadingPage {
+    text-align: center;
+    transform: translateY(calc(50vh - 160px));
+}

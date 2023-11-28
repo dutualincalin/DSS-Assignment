@@ -14,12 +14,13 @@ import Image from "next/image";
 import SnackBarAlerts from "../../components/SnackBarAlerts";
 import {useRouter} from "next/router";
 import AdderComponent from "../../components/AdderComponent";
+import {SERVER_URL} from "../../config/utils";
 
 
 async function fetchBoards() {
     let boards = []
 
-    await axios.get("http://localhost:8080/api/boards")
+    await axios.get(SERVER_URL + "/api/boards")
         .then(response => {boards = response.data})
         .catch(error => console.log(error))
 
@@ -93,7 +94,7 @@ export default function BoardSection({boards}) {
         switchFormView()
     }
     const deleteBoard = (formData) => {
-        axios.delete("http://localhost:8080/api/boards/" + formData.id , {
+        axios.delete(SERVER_URL + "/api/boards/" + formData.id , {
             headers: {'Content-Type': 'application/json'}
         })
 
@@ -136,7 +137,7 @@ export default function BoardSection({boards}) {
     const [formData, setFormData] = useState(defaultForm)
     const sendForm = (event) => {
         if(formData.id === 0) {
-            axios.post("http://localhost:8080/api/boards", formData, {
+            axios.post(SERVER_URL + "/api/boards", formData, {
                 headers: {'Content-Type': 'application/json'}
             })
 
@@ -166,7 +167,7 @@ export default function BoardSection({boards}) {
         }
 
         else {
-            axios.put("http://localhost:8080/api/boards", formData, {
+            axios.put(SERVER_URL + '/api/boards', formData, {
                 headers: {'Content-Type': 'application/json'}
             })
 

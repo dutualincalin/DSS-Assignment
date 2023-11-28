@@ -13,12 +13,13 @@ import {Abc, Description, MoreVert} from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import SnackBarAlerts from "../../components/SnackBarAlerts";
+import {SERVER_URL} from "../../config/utils";
 
 
 async function fetchCards(cardListId) {
     let cards = []
 
-    await axios.get('http://localhost:8080/api/cards/cardList/' + cardListId)
+    await axios.get(SERVER_URL + '/api/cards/cardList/' + cardListId)
         .then(response => {cards = response.data})
         .catch(error => console.log(error))
 
@@ -48,7 +49,7 @@ export default function CardsSection({cardListId}) {
         switchFormView()
     }
     const deleteCard = (formData) => {
-        axios.delete("http://localhost:8080/api/cards/" + formData.id , {
+        axios.delete(SERVER_URL + "/api/cards/" + formData.id , {
             headers: {'Content-Type': 'application/json'}
         })
 
@@ -92,7 +93,7 @@ export default function CardsSection({cardListId}) {
     const [formData, setFormData] = useState(defaultForm)
     const sendForm = (event) => {
         if(formData.id === 0) {
-            axios.post("http://localhost:8080/api/cards", formData, {
+            axios.post(SERVER_URL + "/api/cards", formData, {
                 headers: {'Content-Type': 'application/json'}
             })
 
@@ -122,7 +123,7 @@ export default function CardsSection({cardListId}) {
         }
 
         else {
-            axios.put("http://localhost:8080/api/cards", formData, {
+            axios.put(SERVER_URL + '/api/cards', formData, {
                 headers: {'Content-Type': 'application/json'}
             })
 

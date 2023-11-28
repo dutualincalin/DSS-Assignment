@@ -1,10 +1,15 @@
-import React from 'react';
-import {Button, Container} from "@mui/material";
+import {useRouter} from "next/router";
+import React, {useEffect} from "react";
+import LoaderComponent from "../components/LoaderComponent";
 
 export default function Home() {
-  return (
-    <Container maxWidth="sm">
-      <Button variant={"contained"} href="/boards">Start App</Button>
-    </Container>
-  );
+    const router = useRouter();
+
+    useEffect(() => {
+        router.push('/boards');
+    }, [router]);
+
+    return (
+        <LoaderComponent></LoaderComponent>
+    );
 }

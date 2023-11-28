@@ -6,18 +6,19 @@ import SnackBarAlerts from "../../components/SnackBarAlerts";
 import {Backdrop, Box, Button, Card, CardContent, Container, Fade, IconButton, ListItemIcon, Menu, MenuItem, Modal,
     TextField
 } from "@mui/material";
-import {Abc, ArrowBack, ArrowCircleLeft, MenuOpen} from "@mui/icons-material";
+import {Abc, ArrowCircleLeft, MenuOpen} from "@mui/icons-material";
 import Grid from "@mui/material/Unstable_Grid2";
 import Image from "next/image";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import CardsSection from "../cards";
 import {useRouter} from "next/router";
+import {SERVER_URL} from "../../config/utils";
 
 async function fetchCardLists(id) {
     let cardLists = []
 
-    await axios.get('http://localhost:8080/api/cardLists/board/' + id)
+    await axios.get(SERVER_URL + '/api/cardLists/board/' + id)
         .then(response => {cardLists = response.data})
         .catch(error => console.log(error))
 
@@ -30,7 +31,7 @@ export async function getServerSideProps(context) {
     let cardLists = await fetchCardLists(boardId)
 
     let board = null
-    await axios.get('http://localhost:8080/api/boards')
+    await axios.get(SERVER_URL + '/api/boards')
         .then(response => board = response.data.filter(boardItem => boardItem.id === boardId)[0])
         .catch(error => console.log(error))
 
@@ -61,7 +62,7 @@ export default function CardListsSection({board, cardLists}) {
         switchFormView()
     }
     const deleteList = (formData) => {
-        axios.delete("http://localhost:8080/api/cardLists/" + formData.id , {
+        axios.delete(SERVER_URL + '/api/cardLists/' + formData.id , {
             headers: {'Content-Type': 'application/json'}
         })
 
@@ -104,7 +105,7 @@ export default function CardListsSection({board, cardLists}) {
     const [formData, setFormData] = useState(defaultForm)
     const sendForm = (event) => {
         if(formData.id === 0) {
-            axios.post("http://localhost:8080/api/cardLists", formData, {
+            axios.post(SERVER_URL + '/api/cardLists', formData, {
                 headers: {'Content-Type': 'application/json'}
             })
 
@@ -134,7 +135,7 @@ export default function CardListsSection({board, cardLists}) {
         }
 
         else {
-            axios.put("http://localhost:8080/api/cardLists", formData, {
+            axios.put(SERVER_URL + '/api/cardLists', formData, {
                 headers: {'Content-Type': 'application/json'}
             })
 
