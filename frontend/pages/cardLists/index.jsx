@@ -11,24 +11,22 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Image from "next/image";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import CardsSection from "../cards";
 import {useRouter} from "next/router";
 import {SERVER_URL} from "../../config/utils";
+import dynamic from "next/dynamic";
 
-async function fetchCardLists(id) {
-    let cardLists = []
-
-    await axios.get(SERVER_URL + '/api/cardLists/board/' + id)
-        .then(response => {cardLists = response.data})
-        .catch(error => console.log(error))
-
-    return cardLists
-}
+const DynamicHeader = dynamic(() => import('../cards/index'), {
+    ssr: false,
+});
 
 export async function getServerSideProps(context) {
     const {query} = context;
     let boardId = parseInt(query.boardId)
-    let cardLists = await fetchCardLists(boardId)
+    let cardListCollection = []
+
+    await axios.get(SERVER_URL + '/api/cardLists/board/' + boardId)
+        .then(response => {cardListCollection = response.data})
+        .catch(error => console.log(error))
 
     let board = null
     await axios.get(SERVER_URL + '/api/boards')
@@ -38,12 +36,12 @@ export async function getServerSideProps(context) {
     return {
         props: {
             board: board,
-            cardLists: cardLists
+            cardListCollection: cardListCollection
         }
     }
 }
 
-export default function CardListsSection({board, cardLists}) {
+export default function CardListsSection({board, cardListCollection}) {
     // ************************ Constants ************************ //
 
     const router = useRouter()
@@ -54,8 +52,6 @@ export default function CardListsSection({board, cardLists}) {
     }
 
     // ************************ CardList Collection ************************ //
-
-    const [cardListCollection, setCardListCollection] = useState(cardLists)
 
     const createList = () => {
         setFormData(defaultForm)
@@ -68,7 +64,7 @@ export default function CardListsSection({board, cardLists}) {
 
         .then(() => {
             toastAlert("List removed successfully!", "success")
-            fetchCardLists(board.id).then(result => setCardListCollection(result))
+            router.replace(router.asPath);
         })
 
         .catch(error => {
@@ -112,7 +108,7 @@ export default function CardListsSection({board, cardLists}) {
             .then(() => {
                 toastAlert("List created successfully!", "success")
                 switchFormView()
-                fetchCardLists(board.id).then(result => setCardListCollection(result))
+                router.replace(router.asPath);
             })
 
             .catch(error => {
@@ -142,7 +138,7 @@ export default function CardListsSection({board, cardLists}) {
                 .then(() => {
                     toastAlert("List modified successfully!", "success")
                     switchFormView()
-                    fetchCardLists(board.id).then(result => setCardListCollection(result))
+                    router.replace(router.asPath);
                 })
 
                 .catch(error => {
@@ -302,7 +298,7 @@ export default function CardListsSection({board, cardLists}) {
                             </Container>
 
                             <CardContent sx={{width: '100%'}}>
-                                <CardsSection cardListId={cardList.id}></CardsSection>
+                                <DynamicHeader cardListId={cardList.id}></DynamicHeader>
                             </CardContent>
                         </Card>
                     </Grid>

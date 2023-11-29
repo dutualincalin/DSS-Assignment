@@ -2,8 +2,7 @@ import {Alert, AlertTitle, Snackbar} from "@mui/material";
 import React from "react";
 
 export default function SnackBarAlerts({alertInfo, closeAlert}) {
-
-    function getAlertTitle() {
+    const getAlertTitle = () =>  {
         return alertInfo.alertType.charAt(0).toUpperCase() + alertInfo.alertType.slice(1)
     }
 
