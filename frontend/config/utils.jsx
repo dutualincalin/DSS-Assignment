@@ -1,1 +1,1 @@
-export const SERVER_URL = "https://server-trello-clone-dss-assignment.onrender.com"
+export const SERVER_URL = "https://dutualincalin-dss-assignment-server.onrender.com"

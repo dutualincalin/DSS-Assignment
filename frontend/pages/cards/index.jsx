@@ -14,7 +14,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import SnackBarAlerts from "../../components/SnackBarAlerts";
 import {SERVER_URL} from "../../config/utils";
-import dynamic from "next/dynamic";
 
 
 async function fetchCards(cardListId) {
@@ -57,7 +56,7 @@ export default function CardsSection({cardListId}) {
         .then(() => {
             switchCardView()
             toastAlert("Card removed successfully!", "success")
-            router.replace(router.asPath);
+            fetchCards(cardListId).then(result => setCardList(result))
         })
 
         .catch(error => {
@@ -101,7 +100,7 @@ export default function CardsSection({cardListId}) {
                 .then(() => {
                     toastAlert("Card created successfully!", "success")
                     switchFormView()
-                    router.replace(router.asPath);
+                    fetchCards(cardListId).then(result => setCardList(result))
                 })
 
                 .catch(error => {
@@ -131,7 +130,7 @@ export default function CardsSection({cardListId}) {
             .then(() => {
                 toastAlert("Card modified successfully!", "success")
                 switchFormView()
-                router.replace(router.asPath);
+                fetchCards(cardListId).then(result => setCardList(result))
             })
 
             .catch(error => {
