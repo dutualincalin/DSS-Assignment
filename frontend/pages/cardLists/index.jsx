@@ -263,14 +263,6 @@ export default function CardListsSection({board, cardListCollection}) {
 
     return (
         <div className={cardListStyles.Grid}>
-            <Image
-                src={board.image}
-                layout={'fill'}
-                loading="lazy"
-                className={cardListStyles.backgroundImage}
-                alt="background image"
-            />
-
             <Box className={cardListStyles.componentHeader}>
                 <IconButton className={cardListStyles.componentHeaderIcon} onClick={() => router.back()}>
                     <ArrowCircleLeft fontSize="large"/>
