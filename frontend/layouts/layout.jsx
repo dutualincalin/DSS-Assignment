@@ -9,7 +9,7 @@ export default function Layout({children}) {
                 <Toolbar id="toolbarLayout">
                     <Image
                         alt="Logo"
-                        src="/icon.png"
+                        src="/icon.jpg"
                         height={40}
                         width={40}
                     />
