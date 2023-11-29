@@ -17,18 +17,12 @@ import AdderComponent from "../components/AdderComponent";
 import {SERVER_URL} from "../config/utils";
 
 
-async function fetchBoards() {
+export async function getServerSideProps() {
     let boards = []
 
     await axios.get(SERVER_URL + "/api/boards")
         .then(response => {boards = response.data})
         .catch(error => console.log(error))
-
-    return boards
-}
-
-export async function getServerSideProps() {
-    let boards = await fetchBoards()
 
     return{
         props: {
@@ -86,9 +80,6 @@ export default function BoardSection({boards}) {
     ]
 
     // ************************ Boards List ************************ //
-
-    const [boardList, setBoardList] = useState(boards)
-
     const createBoard = () => {
         setFormData(defaultForm)
         switchFormView()
@@ -100,7 +91,7 @@ export default function BoardSection({boards}) {
 
         .then(() => {
             toastAlert("Board removed successfully!", "success")
-            fetchBoards().then(result => setBoardList(result))
+            router.replace(router.asPath);
         })
 
         .catch(error => {
@@ -144,7 +135,7 @@ export default function BoardSection({boards}) {
             .then(() => {
                 toastAlert("Board created successfully!", "success")
                 switchFormView()
-                fetchBoards().then(result => setBoardList(result))
+                router.replace(router.asPath);
             })
 
             .catch(error => {
@@ -174,7 +165,7 @@ export default function BoardSection({boards}) {
             .then(() => {
                 toastAlert("Board modified successfully!", "success")
                 switchFormView()
-                fetchBoards().then(result => setBoardList(result))
+                router.replace(router.asPath);
             })
 
             .catch(error => {
@@ -358,7 +349,7 @@ export default function BoardSection({boards}) {
     return(
         <div className={boardStyles.Grid}>
             <Grid container direction="row" justifyContent="flex-start" alignItems="stretch" spacing={4}>
-                {boardList.map(board =>
+                {boards.map(board =>
                     <Grid item key={board.id} xs={6} sm={4} lg={2.4}>
                         <Card className={boardStyles.BoardCard}>
                             <CardActionArea onClick={(event) => clickForOptions(event, board)} id={board.id}>
