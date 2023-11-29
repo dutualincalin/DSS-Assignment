@@ -72,10 +72,6 @@ export default function BoardSection({boards}) {
             img: '/HandDraw.jpg',
             title: 'HandDraw',
         },
-        {
-            img: '/Winter.jpg',
-            title: 'Winter',
-        },
     ]
 
     // ************************ Boards List ************************ //
