@@ -2,7 +2,6 @@ import cardListStyles from './cardList.module.css'
 import axios from "axios";
 import AdderComponent from "../../components/AdderComponent";
 import React, {useState} from "react";
-import SnackBarAlerts from "../../components/SnackBarAlerts";
 import {Backdrop, Box, Button, Card, CardContent, Container, Fade, IconButton, ListItemIcon, Menu, MenuItem, Modal,
     TextField
 } from "@mui/material";
@@ -86,12 +85,9 @@ export default function CardListsSection({board, cardListCollection}) {
 
     // ************************ Alerts ************************ //
 
-    const [alertInfo, setAlertState] = useState({state: false, message: "", alertType: "success"})
-
     const toastAlert = (message, alertType) => {
-        setAlertState({state: true, message: message, alertType: alertType})
+        alert(alertType.toUpperCase() + ": " + message)
     }
-    const closeToast = () => {setAlertState({...alertInfo, state: false})}
 
     // ************************ Form ************************ //
 
@@ -310,7 +306,6 @@ export default function CardListsSection({board, cardListCollection}) {
             {menuComponent(formData, optionsPoint, optionsOpen, closeOptions, handleEdit, handleDelete)}
 
             <AdderComponent onClickFunction={createList}></AdderComponent>
-            <SnackBarAlerts alertInfo={alertInfo} closeAlert={closeToast}></SnackBarAlerts>
 
         </div>
     )

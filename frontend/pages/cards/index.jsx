@@ -12,7 +12,6 @@ import {
 import {Abc, Description, MoreVert} from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import SnackBarAlerts from "../../components/SnackBarAlerts";
 import {SERVER_URL} from "../../config/utils";
 
 
@@ -78,12 +77,10 @@ export default function CardsSection({cardListId}) {
 
     // ************************ Alerts ************************ //
 
-    const [alertInfo, setAlertState] = useState({state: false, message: "", alertType: "success"})
-
     const toastAlert = (message, alertType) => {
-        setAlertState({state: true, message: message, alertType: alertType})
+        alert(alertType.toUpperCase() + ": " + message)
     }
-    const closeToast = () => {setAlertState({...alertInfo, state: false})}
+
 
     // ************************ Form ************************ //
 
@@ -339,8 +336,6 @@ export default function CardsSection({cardListId}) {
             {formComponent(formData, showForm, setFormData, switchFormView, sendForm)}
             {cardView(formData, cardViewState, switchCardView, clickForOptions)}
             {menuComponent(formData, optionsPoint, optionsOpen, closeOptions, handleEdit, handleDelete)}
-
-            <SnackBarAlerts alertInfo={alertInfo} closeAlert={closeToast}></SnackBarAlerts>
         </div>
     )
 }
