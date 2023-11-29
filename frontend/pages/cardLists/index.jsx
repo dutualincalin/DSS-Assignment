@@ -270,6 +270,7 @@ export default function CardListsSection({board, cardListCollection}) {
             <Image
                 src={board.image}
                 layout={'fill'}
+                loading="lazy"
                 className={cardListStyles.backgroundImage}
                 alt="background image"
             />

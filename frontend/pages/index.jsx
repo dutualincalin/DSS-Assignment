@@ -37,12 +37,12 @@ export default function BoardSection({boards}) {
     const defaultForm = {
         id: 0,
         boardName: '',
-        image: '/Default.png',
+        image: '/Default.jpg',
     }
 
     const imageData = [
         {
-            img: '/Default.png',
+            img: '/Default.jpg',
             title:'No background'
         },
         {
@@ -241,7 +241,7 @@ export default function BoardSection({boards}) {
                                         <Image
                                             src={formData.image}
                                             alt="Selected picture"
-                                            height={95}
+                                            height={90}
                                             width={190}
                                         />
                                     </Box>
@@ -255,8 +255,8 @@ export default function BoardSection({boards}) {
                                             <Image
                                                 src={imageItem.img}
                                                 alt={imageItem.title}
-                                                width={195}
                                                 height={90}
+                                                width={190}
                                                 loading="lazy"
                                                 onClick={() => {
                                                     setFormData(prevState => ({
@@ -353,7 +353,12 @@ export default function BoardSection({boards}) {
                     <Grid item key={board.id} xs={6} sm={4} lg={2.4}>
                         <Card className={boardStyles.BoardCard}>
                             <CardActionArea onClick={(event) => clickForOptions(event, board)} id={board.id}>
-                                <CardMedia component="img" height="90" image={board.image}/>
+                                <CardMedia
+                                    component="img"
+                                    height="90"
+                                    image={board.image}
+                                    loading="lazy"
+                                />
 
                                 <CardContent className={boardStyles.CardContent}>
                                    <b>{board.boardName}</b>
