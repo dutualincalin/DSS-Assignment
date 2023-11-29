@@ -11,6 +11,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import LaunchIcon from '@mui/icons-material/Launch';
 import EditIcon from '@mui/icons-material/Edit';
 import Image from "next/image";
+import SnackBarAlerts from "../components/SnackBarAlerts";
 import {useRouter} from "next/router";
 import AdderComponent from "../components/AdderComponent";
 import {SERVER_URL} from "../config/utils";
@@ -112,9 +113,12 @@ export default function BoardSection({boards}) {
 
     // ************************ Alerts ************************ //
 
+    const [alertInfo, setAlertState] = useState({state: false, message: "", alertType: "success"})
+
     const toastAlert = (message, alertType) => {
-        alert(alertType.toUpperCase() + ": " + message)
+        setAlertState({state: true, message: message, alertType: alertType})
     }
+    const closeToast = () => {setAlertState({...alertInfo, state: false})}
 
     // ************************ Form ************************ //
 
@@ -369,6 +373,8 @@ export default function BoardSection({boards}) {
 
             {formComponent(formData, showForm, setFormData, switchFormView, sendForm)}
             {menuComponent(formData, optionsPoint, optionsOpen, closeOptions, handleOpen, handleEdit, handleDelete)}
+
+            <SnackBarAlerts alertInfo={alertInfo} closeAlert={closeToast}></SnackBarAlerts>
         </div>
     )
 }
