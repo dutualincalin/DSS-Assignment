@@ -13,6 +13,7 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import {useRouter} from "next/router";
 import {SERVER_URL} from "../../config/utils";
 import dynamic from "next/dynamic";
+import {LoadingButton} from "@mui/lab";
 
 const DynamicHeader = dynamic(() => import('../cards/index'), {
     ssr: false,
@@ -91,11 +92,30 @@ export default function CardListsSection({board, cardListCollection}) {
 
     // ************************ Form ************************ //
 
-    const [showForm, setFormView] = useState(false)
-    const switchFormView = () => setFormView(!showForm)
+    const [formBooleans, setFormBooleans] = useState({
+        showForm: false,
+        submitLoading: false
+    })
+
+    const switchFormView = () => setFormBooleans({
+        showForm: !formBooleans.showForm,
+        submitLoading: formBooleans.submitLoading
+    })
+
+    const switchSubmitLoading = () => setFormBooleans({
+        showForm: formBooleans.showForm,
+        submitLoading: !formBooleans.submitLoading
+    })
 
     const [formData, setFormData] = useState(defaultForm)
+
     const sendForm = (event) => {
+        switchSubmitLoading()
+        sendFormRequest(event)
+        switchSubmitLoading()
+    }
+
+    const sendFormRequest = (event) => {
         if(formData.id === 0) {
             axios.post(SERVER_URL + '/api/cardLists', formData, {
                 headers: {'Content-Type': 'application/json'}
@@ -161,12 +181,12 @@ export default function CardListsSection({board, cardListCollection}) {
         event.preventDefault()
     }
 
-    function formComponent(formData, showForm, setFormData, switchFormView, sendForm) {
+    function formComponent(formData, formBooleans, setFormData, switchFormView, sendForm) {
         return (
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={showForm}
+                open={formBooleans.showForm}
                 onClose={switchFormView}
                 closeAfterTransition
                 slots={{ backdrop: Backdrop }}
@@ -176,12 +196,21 @@ export default function CardListsSection({board, cardListCollection}) {
                     },
                 }}
             >
-                <Fade in={showForm}>
+                <Fade in={formBooleans.showForm}>
                     <Box className={cardListStyles.ModalBox}>
                         <form onSubmit={sendForm}>
                             <Box className={cardListStyles.formHeader}>
                                 <h2> Create a new card list </h2>
-                                <Button type="submit" variant="contained" color="success">Submit</Button>
+                                <LoadingButton
+                                    type="submit"
+                                    variant="contained"
+                                    color="success"
+                                    loading={formBooleans.submitLoading}
+                                >
+                                    <span>
+                                        Submit
+                                    </span>
+                                </LoadingButton>
                             </Box>
 
                             <Box className={cardListStyles.formContent}>
@@ -294,7 +323,7 @@ export default function CardListsSection({board, cardListCollection}) {
                 )}
             </Grid>
 
-            {formComponent(formData, showForm, setFormData, switchFormView, sendForm)}
+            {formComponent(formData, formBooleans, setFormData, switchFormView, sendForm)}
             {menuComponent(formData, optionsPoint, optionsOpen, closeOptions, handleEdit, handleDelete)}
 
             <AdderComponent onClickFunction={createList}></AdderComponent>

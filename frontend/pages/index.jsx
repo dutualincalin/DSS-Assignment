@@ -2,7 +2,7 @@ import boardStyles from './boards.module.css'
 import axios from "axios";
 import Grid from "@mui/material/Unstable_Grid2";
 import {
-    Button, Card, CardActionArea, CardContent, Fade, Modal, Backdrop, Box, TextField, Container,
+    Card, CardActionArea, CardContent, Fade, Modal, Backdrop, Box, TextField, Container,
     ImageList, ImageListItem, Divider, CardMedia, Menu, MenuItem, ListItemIcon
 } from "@mui/material";
 import React, {useState} from "react";
@@ -14,6 +14,7 @@ import Image from "next/image";
 import {useRouter} from "next/router";
 import AdderComponent from "../components/AdderComponent";
 import {SERVER_URL} from "../config/utils";
+import {LoadingButton} from "@mui/lab";
 
 
 export async function getServerSideProps() {
@@ -114,11 +115,30 @@ export default function BoardSection({boards}) {
 
     // ************************ Form ************************ //
 
-    const [showForm, setFormView] = useState(false)
-    const switchFormView = () => setFormView(!showForm)
+    const [formBooleans, setFormBooleans] = useState({
+        showForm: false,
+        submitLoading: false
+    })
+
+    const switchFormView = () => setFormBooleans({
+        showForm: !formBooleans.showForm,
+        submitLoading: formBooleans.submitLoading
+    })
+
+    const switchSubmitLoading = () => setFormBooleans({
+        showForm: formBooleans.showForm,
+        submitLoading: !formBooleans.submitLoading
+    })
 
     const [formData, setFormData] = useState(defaultForm)
+
     const sendForm = (event) => {
+        switchSubmitLoading()
+        sendFormRequest(event)
+        switchSubmitLoading()
+    }
+
+    const sendFormRequest = (event) => {
         if(formData.id === 0) {
             axios.post(SERVER_URL + "/api/boards", formData, {
                 headers: {'Content-Type': 'application/json'}
@@ -145,8 +165,6 @@ export default function BoardSection({boards}) {
                         toastAlert("The server is down or has an error.", "error")
                 }
             })
-
-            event.preventDefault()
         }
 
         else {
@@ -184,12 +202,12 @@ export default function BoardSection({boards}) {
         event.preventDefault()
     }
 
-    function formComponent(formData, showForm, setFormData, switchFormView, sendForm) {
+    function formComponent(formData, formBooleans, setFormData, switchFormView, sendForm) {
         return (
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={showForm}
+                open={formBooleans.showForm}
                 onClose={switchFormView}
                 closeAfterTransition
                 slots={{ backdrop: Backdrop }}
@@ -199,12 +217,21 @@ export default function BoardSection({boards}) {
                     },
                 }}
             >
-                <Fade in={showForm}>
+                <Fade in={formBooleans.showForm}>
                     <Container className={boardStyles.ModalBox}>
                         <form onSubmit={sendForm}>
                             <Box className={boardStyles.formHeader}>
                                 <h2> Create a new board </h2>
-                                <Button type="submit" variant="contained" color="success">Submit</Button>
+                                <LoadingButton
+                                    type="submit"
+                                    variant="contained"
+                                    color="success"
+                                    loading={formBooleans.submitLoading}
+                                >
+                                    <span>
+                                        Submit
+                                    </span>
+                                </LoadingButton>
                             </Box>
 
                             <Box className={boardStyles.formContent}>
@@ -343,7 +370,7 @@ export default function BoardSection({boards}) {
         <div className={boardStyles.Grid}>
             <Grid container direction="row" justifyContent="flex-start" alignItems="stretch" spacing={4}>
                 {boards.map(board =>
-                    <Grid item key={board.id} xs={6} sm={4} lg={2.4}>
+                    <Grid key={board.id} xs={6} sm={4} lg={2.4}>
                         <Card className={boardStyles.BoardCard}>
                             <CardActionArea onClick={(event) => clickForOptions(event, board)} id={board.id}>
                                 <CardMedia
@@ -364,7 +391,7 @@ export default function BoardSection({boards}) {
 
             <AdderComponent onClickFunction={createBoard}></AdderComponent>
 
-            {formComponent(formData, showForm, setFormData, switchFormView, sendForm)}
+            {formComponent(formData, formBooleans, setFormData, switchFormView, sendForm)}
             {menuComponent(formData, optionsPoint, optionsOpen, closeOptions, handleOpen, handleEdit, handleDelete)}
         </div>
     )
