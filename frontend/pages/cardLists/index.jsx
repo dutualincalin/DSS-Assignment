@@ -2,12 +2,11 @@ import cardListStyles from './cardList.module.css'
 import axios from "axios";
 import AdderComponent from "../../components/AdderComponent";
 import React, {useState} from "react";
-import {Backdrop, Box, Button, Card, CardContent, Container, Fade, IconButton, ListItemIcon, Menu, MenuItem, Modal,
+import {Backdrop, Box, Card, CardContent, Container, Fade, IconButton, ListItemIcon, Menu, MenuItem, Modal,
     TextField
 } from "@mui/material";
 import {Abc, ArrowCircleLeft, MenuOpen} from "@mui/icons-material";
 import Grid from "@mui/material/Unstable_Grid2";
-import Image from "next/image";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import {useRouter} from "next/router";
@@ -327,7 +326,6 @@ export default function CardListsSection({board, cardListCollection}) {
             {menuComponent(formData, optionsPoint, optionsOpen, closeOptions, handleEdit, handleDelete)}
 
             <AdderComponent onClickFunction={createList}></AdderComponent>
-
         </div>
     )
 }

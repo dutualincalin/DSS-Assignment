@@ -381,7 +381,7 @@ export default function BoardSection({boards}) {
                                 />
 
                                 <CardContent className={boardStyles.CardContent}>
-                                   <b>{board.boardName}</b>
+                                    <b>{board.boardName}</b>
                                 </CardContent>
                             </CardActionArea>
                         </Card>
