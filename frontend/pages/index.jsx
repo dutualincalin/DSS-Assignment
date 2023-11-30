@@ -249,7 +249,8 @@ export default function BoardSection({boards}) {
                                                 alt={imageItem.title}
                                                 height={90}
                                                 width={190}
-                                                placeholder="blur"
+                                                placeholder={imageItem.img}
+                                                loading="lazy"
                                                 onClick={() => {
                                                     setFormData(prevState => ({
                                                         ...prevState,
