@@ -36,40 +36,40 @@ export default function BoardSection({boards}) {
     const defaultForm = {
         id: 0,
         boardName: '',
-        image: '/Default.jpg',
+        image: '/Default.webp',
     }
 
     const imageData = [
         {
-            img: '/Default.jpg',
+            img: '/Default.webp',
             title:'No background'
         },
         {
-            img: '/Abstract1.jpg',
+            img: '/Abstract1.webp',
             title: 'Abstract1',
         },
         {
-            img: '/Abstract2.jpg',
+            img: '/Abstract2.webp',
             title: 'Abstract2',
         },
         {
-            img: '/Abstract3.jpg',
+            img: '/Abstract3.webp',
             title: 'Abstract13',
         },
         {
-            img: '/Geometric1.jpg',
+            img: '/Geometric1.webp',
             title: 'Geometric1',
         },
         {
-            img: '/Geometric2.jpg',
+            img: '/Geometric2.webp',
             title: 'Geometric2',
         },
         {
-            img: '/Galaxy.jpg',
+            img: '/Galaxy.webp',
             title: 'Galaxy',
         },
         {
-            img: '/HandDraw.jpg',
+            img: '/HandDraw.webp',
             title: 'HandDraw',
         },
     ]
