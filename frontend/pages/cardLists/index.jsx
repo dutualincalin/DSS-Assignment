@@ -1,6 +1,6 @@
 import cardListStyles from './cardList.module.css'
 import axios from "axios";
-import AdderComponent from "../../components/AdderComponent";
+import AdderComponent from "../../components/adder/AdderComponent";
 import React, {useState} from "react";
 import {Backdrop, Box, Card, CardContent, Container, Fade, IconButton, ListItemIcon, Menu, MenuItem, Modal,
     TextField
@@ -14,7 +14,7 @@ import {SERVER_URL} from "../../config/utils";
 import dynamic from "next/dynamic";
 import {LoadingButton} from "@mui/lab";
 
-const DynamicHeader = dynamic(() => import('../cards/index'), {
+const DynamicHeader = dynamic(() => import('../../components/cards/cards'), {
     ssr: false,
 });
 

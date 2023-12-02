@@ -12,7 +12,7 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import EditIcon from '@mui/icons-material/Edit';
 import Image from "next/image";
 import {useRouter} from "next/router";
-import AdderComponent from "../components/AdderComponent";
+import AdderComponent from "../components/adder/AdderComponent";
 import {SERVER_URL} from "../config/utils";
 import {LoadingButton} from "@mui/lab";
 
