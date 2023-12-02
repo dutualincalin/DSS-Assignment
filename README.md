@@ -195,9 +195,18 @@ nature of the account, the ram used for one instance is 512MB which is manageabl
 
 However, given the fact that I used pictures for boards, the performance of the app was not on par with what was offered
 at first, so I made as many optimizations as I possibly could and some fancy feature removals and I managed to achieve a
-relatively optimal solution.
+relatively optimal solution. In addition to the limited resources, the inactivity will shutdown the machine to conserve
+resources which again is not ideal given that the app restarts really slow, so cron jobs have been created to bypass the
+issue.
 
 I tried to use [Vercel](https://vercel.com/), however I had a hard time setting the region of deployment...which led me
 to search for other options such as Render.
 
-Note: Please be gentle with the website, don't navigate too fast, or it might crash the client service on Render. 
+Note: Please be gentle with the website, don't navigate too fast, or it might crash the client service on Render.
+
+
+## Sources
+
+1. Pictures for boards provided by Freepik - https://www.freepik.com/ - Latest access: 2.12.2023
+2. Components for frontend app provided by Material UI - https://mui.com/material-ui/ - Latest access: 2.12.2023
+3. Deployment provided by Render - https://render.com/ - Latest access - 2.12.2023
